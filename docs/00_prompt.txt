@@ -1,0 +1,148 @@
+Quero fazer um projeto chamado EasyProject que controlará a evolução
+ de projetos de softwares, sendo que para cada projeto preciso 
+ ter ações onde controlarei o tempo e quem faz (desenvolvedor). 
+ Supondo que todos esses projetos utilizem metodologias ágeis,
+ crie um diagrama de classes para o sistema.
+
+ --------
+Papel:
+Voce agora vai exercer a função de analista de requisitos para uma equipe de 
+desenvolvimento de software.
+Contexto:
+Quero fazer um projeto chamado EasyProject que controlará a evolução
+ de projetos de software.
+ Cada projeto terá os seguintes campos: projeto_id (Chave Primária)
+• nome_projeto (Texto)
+• descricao (Texto)
+• data_inicio (Data)
+• data_termino (Data) 
+... estes projetos serão detalhados cada um por um grupo de sprints,
+ para estas sprints teremos os seguintes campos: sprint_id (Chave Primária)
+• projeto_id (Chave Estrangeira referenciando projetos)
+• nome_sprint (Texto)
+• descricao (Texto)
+• data_inicio (Data)
+• data_termino (Data)
+• status(Texto)
+• responsavel (Texto)
+Solicitação:
+ Gostaria que voce criasse as tabelas que serao 
+ utilizadas em um banco de dados relacional
+ 
+ ------------
+Voce agora vai exercer a função de analista de requisitos para uma equipe de 
+desenvolvimento de software.
+Quero fazer um projeto chamado EasyProject que controlará a evolução
+ de projetos de software.
+ Cada projeto terá os seguintes campos: projeto_id (Chave Primária)
+• nome_projeto (Texto) • descricao (Texto) • data_inicio (Data) • data_termino (Data) 
+... estes projetos serão detalhados cada um por um grupo de sprints,
+ para estas sprints teremos os seguintes campos: sprint_id (Chave Primária)
+• projeto_id (Chave Estrangeira referenciando projetos)
+• nome_sprint (Texto), • descricao (Texto)
+• data_inicio (Data) • data_termino (Data)
+• status(Texto) • responsavel (Texto)
+... preciso que vc crie uma tabela usuario com as seguintes colunas
+id usuario, nome, login, senha
+... e nas tabelas projeto e sprint faça o relacionamento para que estas 
+tenham o usuario responsavel pelos projeto e por cada tarefa.
+ Gostaria que voce criasse as tabelas que serao 
+ utilizadas em um banco de dados relacional
+ Agora que temos definidas as estruturas de dados, as tabelas e como elas se relacionam, 
+ vamos especificar um pouco melhor os comportamentos da aplicação. 
+ Agora voce exerce o papel de analista de sistemas.
+ Segue os seguintes requisitos:
+ 1. Precisamos de metodos para um CRUD nas tabelas Projeto,  Sprints e usuario.
+ 2. Precisamos de metodo para logar na applicação.
+ 3. a chamada principal da aplicação, após logar apresenta a lista de projetos.
+Preciso que voce implemente no diagrama de classes que de suporte a este modelo de dados
+ e os requisitos especificados.
+
+ A partir do que analisamos, agora voce desempenhará o papel de Arquiteto de aplicação. 
+ Vamos definir as tecnologias que serão utilizadas para desenvolver nosso sistema:
+ A linguagem será python, utilizaremos a biblioteca flask para o back e implementaremos o 
+ ORM com a banco de dados utilizando SQLAlchemy. O Banco de dados será mysql, e para o front
+ utilizaremos html, js quando necessario, css e bootstrap. 
+ Preciso que voce utilize o diagrama classes descrito a seguir para montar as rotas, a ddl para criar 
+ as tabelas e ainda implemente no flask o sistema de autenticação. Organize os códigos separando
+  a arquitetura com arquivos de rotas, classes de dados e  app.
+  Nos templates utilize um html base para criar uma estrutura padrão.
+Segue a descrição do diagrama de classes e a ddl das tabelas.
+Classe Projeto
+Atributos:
+projeto_id: int
+nome_projeto: str
+descricao: str
+data_inicio: date
+data_termino: date
+usuario_responsavel_id: int
+Métodos:
+criar_projeto(nome_projeto: str, descricao: str, data_inicio: date, data_termino: date, usuario_responsavel_id: int) -> None
+atualizar_projeto(projeto_id: int, nome_projeto: str, descricao: str, data_inicio: date, data_termino: date, usuario_responsavel_id: int) -> None
+deletar_projeto(projeto_id: int) -> None
+listar_projetos() -> List[Projeto]
+obter_projeto(projeto_id: int) -> Projeto
+Classe Sprint
+Atributos:
+sprint_id: int
+projeto_id: int
+nome_sprint: str
+descricao: str
+data_inicio: date
+data_termino: date
+status: str
+responsavel_id: int
+Métodos:
+criar_sprint(projeto_id: int, nome_sprint: str, descricao: str, data_inicio: date, data_termino: date, status: str, responsavel_id: int) -> None
+atualizar_sprint(sprint_id: int, nome_sprint: str, descricao: str, data_inicio: date, data_termino: date, status: str, responsavel_id: int) -> None
+deletar_sprint(sprint_id: int) -> None
+listar_sprints(projeto_id: int) -> List[Sprint]
+obter_sprint(sprint_id: int) -> Sprint
+Classe Usuario
+
+Atributos:
+usuario_id: int
+nome: str
+login: str
+senha: str
+Métodos:
+criar_usuario(nome: str, login: str, senha: str) -> None
+atualizar_usuario(usuario_id: int, nome: str, login: str, senha: str) -> None
+deletar_usuario(usuario_id: int) -> None
+obter_usuario(usuario_id: int) -> Usuario
+verificar_login(login: str, senha: str) -> bool
+
+CREATE TABLE Usuarios (
+    usuario_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    login VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Projetos (
+    projeto_id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_projeto VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    data_inicio DATE NOT NULL,
+    data_termino DATE,
+    usuario_responsavel_id INT,
+    FOREIGN KEY (usuario_responsavel_id) REFERENCES Usuarios(usuario_id)
+);
+
+CREATE TABLE Sprints (
+    sprint_id INT PRIMARY KEY AUTO_INCREMENT,
+    projeto_id INT,
+    nome_sprint VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    data_inicio DATE NOT NULL,
+    data_termino DATE,
+    status VARCHAR(50),
+    responsavel_id INT,
+    FOREIGN KEY (projeto_id) REFERENCES Projetos(projeto_id),
+    FOREIGN KEY (responsavel_id) REFERENCES Usuarios(usuario_id)
+);
+
+
+
+
+ 

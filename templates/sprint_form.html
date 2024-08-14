@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if sprint %}Editar{% else %}Nova{% endif %} Sprint</h2>
+<form method="POST">
+    {% if sprint %}
+    <input type="hidden" name="_method" value="PUT">
+    {% endif %}
+    <input type="hidden" name="projeto_id" value="{{ projeto_id }}">
+    <div class="form-group">
+        <label for="nome_sprint">Nome da Sprint</label>
+        <input type="text" class="form-control" id="nome_sprint" name="nome_sprint" value="{{ sprint.nome_sprint if sprint else '' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <textarea class="form-control" id="descricao" name="descricao">{{ sprint.descricao if sprint else '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="data_inicio">Data de Início</label>
+        <input type="date" class="form-control" id="data_inicio" name="data_inicio" value="{{ sprint.data_inicio if sprint else '' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="data_termino">Data de Término</label>
+        <input type="date" class="form-control" id="data_termino" name="data_termino" value="{{ sprint.data_termino if sprint else '' }}">
+    </div>
+    <div class="form-group">
+        <label for="status">Status</label>
+        <input type="text" class="form-control" id="status" name="status" value="{{ sprint.status if sprint else '' }}" required>
+    </div>
+    <div class="form-group">
+        <label for="responsavel_id">Responsável</label>
+        <select class="form-control" id="responsavel_id" name="responsavel_id" required>
+            <option value="">Selecione um responsável</option>
+            {% for usuario in usuarios %}
+            <option value="{{ usuario.usuario_id }}" {% if sprint and sprint.responsavel_id == usuario.usuario_id %}selected{% endif %}>{{ usuario.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">{% if sprint %}Salvar Alterações{% else %}Salvar{% endif %}</button>
+</form>
+{% endblock %}

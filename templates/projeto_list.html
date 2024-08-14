@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Projetos</h2>
+<a href="{{ url_for('projeto_form') }}" class="btn btn-primary mb-3">Novo Projeto</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Data Início</th>
+            <th>Data Término</th>
+            <th>Responsável</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for projeto in projetos %}
+        <tr>
+            <td>{{ projeto.projeto_id }}</td>
+            <td>{{ projeto.nome_projeto }}</td>
+            <td>{{ projeto.descricao }}</td>
+            <td>{{ projeto.data_inicio }}</td>
+            <td>{{ projeto.data_termino }}</td>
+            <td>{{ projeto.usuario_responsavel.nome }}</td>
+            <td>
+                <a href="{{ url_for('obter_projeto', projeto_id=projeto.projeto_id) }}" class="btn btn-info btn-sm">Visualizar</a>
+                <a href="{{ url_for('projeto_form', projeto_id=projeto.projeto_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('deletar_projeto', projeto_id=projeto.projeto_id) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

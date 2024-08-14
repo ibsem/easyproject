@@ -1,0 +1,43 @@
+Classe Projeto
+Atributos:
+projeto_id: int
+nome_projeto: str
+descricao: str
+data_inicio: date
+data_termino: date
+usuario_responsavel_id: int
+Métodos:
+criar_projeto(nome_projeto: str, descricao: str, data_inicio: date, data_termino: date, usuario_responsavel_id: int) -> None
+atualizar_projeto(projeto_id: int, nome_projeto: str, descricao: str, data_inicio: date, data_termino: date, usuario_responsavel_id: int) -> None
+deletar_projeto(projeto_id: int) -> None
+listar_projetos() -> List[Projeto]
+obter_projeto(projeto_id: int) -> Projeto
+Classe Sprint
+Atributos:
+sprint_id: int
+projeto_id: int
+nome_sprint: str
+descricao: str
+data_inicio: date
+data_termino: date
+status: str
+responsavel_id: int
+Métodos:
+criar_sprint(projeto_id: int, nome_sprint: str, descricao: str, data_inicio: date, data_termino: date, status: str, responsavel_id: int) -> None
+atualizar_sprint(sprint_id: int, nome_sprint: str, descricao: str, data_inicio: date, data_termino: date, status: str, responsavel_id: int) -> None
+deletar_sprint(sprint_id: int) -> None
+listar_sprints(projeto_id: int) -> List[Sprint]
+obter_sprint(sprint_id: int) -> Sprint
+Classe Usuario
+
+Atributos:
+usuario_id: int
+nome: str
+login: str
+senha: str
+Métodos:
+criar_usuario(nome: str, login: str, senha: str) -> None
+atualizar_usuario(usuario_id: int, nome: str, login: str, senha: str) -> None
+deletar_usuario(usuario_id: int) -> None
+obter_usuario(usuario_id: int) -> Usuario
+verificar_login(login: str, senha: str) -> bool
